@@ -1,0 +1,45 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "chats": {
+      "$chatId": {
+        "messages": {
+          ".read": true,
+          ".indexOn": ["createdAt"],
+          "$messageId": {
+            ".write": "newData.exists()",
+            ".validate": "newData.hasChildren(['sender', 'type', 'createdAt']) && (newData.child('type').val() !== 'text' || newData.hasChild('text')) && (newData.child('type').val() !== 'product_offer' || (newData.child('sender').val() === 'comercio' && newData.hasChildren(['status', 'product']))) && (newData.child('type').val() !== 'order_accepted' || (newData.child('sender').val() === 'cliente' && newData.hasChildren(['orderId', 'offerMessageId'])))",
+            "sender": {
+              ".validate": "(newData.val() === 'cliente' || newData.val() === 'comercio') && (!data.exists() || data.val() === newData.val())"
+            },
+            "type": {
+              ".validate": "(newData.val() === 'text' || newData.val() === 'product_offer' || newData.val() === 'order_accepted') && (!data.exists() || data.val() === newData.val())"
+            },
+            "createdAt": {
+              ".validate": "newData.isNumber() && newData.val() <= now + 60000 && (!data.exists() || data.val() === newData.val())"
+            },
+            "text": {
+              ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 1000"
+            },
+            "status": {
+              ".validate": "(!data.exists() && newData.val() === 'pending') || (data.val() === 'pending' && (newData.val() === 'accepted' || newData.val() === 'rejected' || newData.val() === 'cancelled'))"
+            },
+            "product": {
+              ".validate": "newData.hasChildren(['id', 'name', 'price', 'currency']) && (!data.exists() || data.parent().child('status').val() === 'pending')",
+              "id": { ".validate": "newData.isString() && newData.val().length > 0" },
+              "name": { ".validate": "newData.isString() && newData.val().length > 0" },
+              "price": { ".validate": "newData.isNumber() && newData.val() > 0" },
+              "currency": { ".validate": "newData.isString() && newData.val().length === 3" },
+              "imageUrl": { ".validate": "newData.isString()" },
+              "$other": { ".validate": false }
+            },
+            "orderId": { ".validate": "newData.isString() && newData.val().length > 0" },
+            "offerMessageId": { ".validate": "newData.isString() && newData.val().length > 0" },
+            "$other": { ".validate": false }
+          }
+        }
+      }
+    }
+  }
+}
