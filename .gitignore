@@ -12,6 +12,10 @@ build/
 coverage/
 *.tsbuildinfo
 
+# Pedidos generados por la API (ver api/orders.example.json)
+api/orders.json
+api/orders.json.tmp
+
 # Logs y SO
 *.log
 npm-debug.log*

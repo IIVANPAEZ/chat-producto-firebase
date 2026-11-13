@@ -1,0 +1,15 @@
+[
+  {
+    "id": "6d5a1d6a-024d-4995-bfdb-e84e7d568ee6",
+    "chatId": "chat-demo-001",
+    "messageId": "-P6HlgthwBUe_V57OTWg",
+    "product": {
+      "id": "prod-97cded16-5c38-4fb0-ada8-04d08f7281d9",
+      "name": "Bandeja paisa",
+      "price": 35000,
+      "currency": "COP"
+    },
+    "status": "created",
+    "createdAt": 1794537651674
+  }
+]
