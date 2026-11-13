@@ -1,0 +1,305 @@
+:root {
+  --bg: #f4f5f7;
+  --surface: #ffffff;
+  --text: #1d1f24;
+  --muted: #6b7280;
+  --border: #e3e5e8;
+  --primary: #2563eb;
+  --primary-text: #ffffff;
+  --own-bubble: #dbeafe;
+  --other-bubble: #ffffff;
+  --pending: #b45309;
+  --pending-bg: #fef3c7;
+  --accepted: #047857;
+  --accepted-bg: #d1fae5;
+  --rejected: #b91c1c;
+  --rejected-bg: #fee2e2;
+  --cancelled: #4b5563;
+  --cancelled-bg: #e5e7eb;
+
+  font: 15px/1.45 system-ui, 'Segoe UI', Roboto, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #111318;
+    --surface: #1b1e25;
+    --text: #e8eaee;
+    --muted: #9aa1ad;
+    --border: #2c303a;
+    --primary: #3b82f6;
+    --own-bubble: #1e3a5f;
+    --other-bubble: #1b1e25;
+    --pending: #fbbf24;
+    --pending-bg: #3a2c0b;
+    --accepted: #34d399;
+    --accepted-bg: #0b3326;
+    --rejected: #f87171;
+    --rejected-bg: #3b1515;
+    --cancelled: #cbd5e1;
+    --cancelled-bg: #2c303a;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+}
+
+h1,
+h2 {
+  margin: 0;
+}
+
+/* Layout */
+.chat {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  max-width: 760px;
+  margin: 0 auto;
+  background: var(--bg);
+  border-inline: 1px solid var(--border);
+}
+
+.chat__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.chat__header h1 {
+  font-size: 1.15rem;
+}
+
+.chat__subtitle {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.chat__messages {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+}
+
+.chat__notice {
+  margin: auto;
+  color: var(--muted);
+  text-align: center;
+}
+
+.chat__notice--error,
+.chat__error {
+  color: var(--rejected);
+}
+
+.chat__error {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--rejected-bg);
+}
+
+.chat__error button {
+  border: 0;
+  background: none;
+  color: inherit;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+/* Mensajes */
+.message {
+  display: flex;
+}
+
+.message--own {
+  justify-content: flex-end;
+}
+
+.message__bubble {
+  max-width: min(80%, 420px);
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: var(--other-bubble);
+  border: 1px solid var(--border);
+}
+
+.message--own .message__bubble {
+  background: var(--own-bubble);
+  border-color: transparent;
+}
+
+.message__text {
+  margin: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.message__time {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.72rem;
+  color: var(--muted);
+  text-align: right;
+}
+
+.system-message {
+  align-self: center;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--accepted-bg);
+  color: var(--accepted);
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+/* Tarjeta de oferta */
+.offer-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 220px;
+}
+
+.offer-card__image {
+  width: 100%;
+  max-height: 160px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.offer-card__body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.offer-card__label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+.offer-card__name {
+  font-size: 1.05rem;
+}
+
+.offer-card__price {
+  font-weight: 600;
+}
+
+.status {
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.status--pending { color: var(--pending); background: var(--pending-bg); }
+.status--accepted { color: var(--accepted); background: var(--accepted-bg); }
+.status--rejected { color: var(--rejected); background: var(--rejected-bg); }
+.status--cancelled { color: var(--cancelled); background: var(--cancelled-bg); }
+
+/* Controles */
+.button {
+  padding: 8px 14px;
+  border: 1px solid var(--primary);
+  border-radius: 8px;
+  background: var(--primary);
+  color: var(--primary-text);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.button--secondary {
+  background: transparent;
+  color: var(--primary);
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+input {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+}
+
+.message-input {
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+}
+
+/* Formulario de oferta */
+.offer-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+}
+
+.offer-form h2 {
+  font-size: 1rem;
+}
+
+.offer-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.offer-form__row {
+  display: flex;
+  gap: 10px;
+}
+
+.offer-form__row label {
+  flex: 1;
+}
+
+.offer-form__row .offer-form__currency {
+  flex: 0 0 90px;
+}
+
+.offer-form__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
