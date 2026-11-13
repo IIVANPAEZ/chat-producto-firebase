@@ -15,7 +15,6 @@ import type { Order } from '../interfaces/order.interface.js';
 
 export interface CreateOrderResult {
   order: Order;
-  /** false cuando ya existía un pedido para el mismo chatId + messageId. */
   created: boolean;
 }
 
@@ -23,10 +22,9 @@ export interface CreateOrderResult {
 export class OrdersService implements OnModuleInit {
   private readonly logger = new Logger(OrdersService.name);
   private readonly filePath: string;
-  /** Si está definido, solo se aceptan pedidos de este chat. */
   private readonly allowedChatId?: string;
   private readonly orders = new Map<string, Order>();
-  /** Cola para serializar escrituras al archivo y evitar condiciones de carrera. */
+  // cola de escrituras: evita que dos pedidos simultáneos se pisen el archivo
   private writeQueue: Promise<void> = Promise.resolve();
 
   constructor(config: ConfigService) {
@@ -108,7 +106,7 @@ export class OrdersService implements OnModuleInit {
     return parsed as Order[];
   }
 
-  /** Escribe todos los pedidos de forma atómica (archivo temporal + rename). */
+  // escritura atómica (.tmp + rename) para no dejar el json corrupto
   private persist(): Promise<void> {
     const snapshot = JSON.stringify(this.findAll(), null, 2);
     const run = async (): Promise<void> => {

@@ -34,7 +34,6 @@ describe('OrdersService', () => {
   let dir: string;
   let filePath: string;
 
-  /** Crea el servicio como lo haría Nest, con un ConfigService falso. */
   async function createService(env: Record<string, string> = {}): Promise<OrdersService> {
     const values: Record<string, string> = { ORDERS_FILE_PATH: filePath, ...env };
     const moduleRef = await Test.createTestingModule({
@@ -46,7 +45,7 @@ describe('OrdersService', () => {
         },
       ],
     }).compile();
-    await moduleRef.init(); // ejecuta onModuleInit (carga orders.json)
+    await moduleRef.init(); // ejecuta onModuleInit (carga el json)
     return moduleRef.get(OrdersService);
   }
 

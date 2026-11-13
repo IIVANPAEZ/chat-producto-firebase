@@ -195,6 +195,12 @@ h2 {
   gap: 4px;
 }
 
+.offer-card__actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+}
+
 .offer-card__label {
   font-size: 0.72rem;
   text-transform: uppercase;

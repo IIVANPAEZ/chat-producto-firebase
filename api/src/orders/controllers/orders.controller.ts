@@ -8,7 +8,7 @@ import { OrdersService } from '../services/orders.service.js';
 export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
 
-  /** 201 si se crea el pedido; 200 si ya existía para la misma oferta (idempotente). */
+  // 201 si se crea, 200 si ya existía un pedido para esa oferta
   @Post()
   async create(
     @Body() dto: CreateOrderDto,

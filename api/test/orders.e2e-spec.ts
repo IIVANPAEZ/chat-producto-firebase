@@ -27,14 +27,14 @@ describe('Orders (e2e)', () => {
   let dir: string;
 
   beforeAll(async () => {
-    // Las variables del proceso tienen prioridad sobre el .env: no se toca el orders.json real.
+    // process.env tiene prioridad sobre .env: se usa un orders.json temporal
     dir = await mkdtemp(join(tmpdir(), 'orders-e2e-'));
     process.env.ORDERS_FILE_PATH = join(dir, 'orders.json');
     process.env.CHAT_ID = CHAT_ID;
 
     const moduleRef = await Test.createTestingModule({ imports: [AppModule] }).compile();
     app = moduleRef.createNestApplication();
-    // Misma configuración de validación que main.ts
+    // misma configuración que main.ts
     app.useGlobalPipes(
       new ValidationPipe({ transform: true, whitelist: true, forbidNonWhitelisted: true }),
     );
